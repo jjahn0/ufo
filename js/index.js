@@ -8,7 +8,7 @@ var $searchBtn = document.querySelector("#search");
 var $clearBtn = document.querySelector("#clear");
 
 
-$searchBtn.addEventListener("click", advancedSearch);
+d3.select("#search").on("click", function(event){ advancedSearch() });
 
 $clearBtn.addEventListener("click", resetClick);
 
@@ -93,8 +93,6 @@ function handleSearch(){
 }
 
 function submitClickEvent(event){
-    event.preventDefault();
-
     var entry = {
         datetime: document.getElementById("datetime").value,
         city: document.getElementById("city").value.toLowerCase(),
@@ -117,7 +115,6 @@ function resetClick(event){
     
 
 function advancedSearch (event){
-    event.preventDefault();
 
     var results = dataSet;
     var dateTimeSearch = document.getElementById("datetime").value.trim().toLowerCase();
@@ -129,18 +126,23 @@ function advancedSearch (event){
 
     if (dateTimeSearch !== ''){
         results = results.filter(results => results.state.trim().toLowerCase() === stateSearch);
+        dateTimeSearch='';
     }
     if (citySearch !== ''){
         results = results.filter(results => results.city.trim().toLowerCase() === citySearch);
+        citySearch='';
     }
     if (stateSearch !== ''){
         results = results.filter(results => results.state.trim().toLowerCase() === stateSearch);
+        stateSearch = '';
     }
     if (countrySearch !== ''){
         results = results.filter(results => results.country.trim().toLowerCase() === countrySearch);
+        countrySearch = '';
     }
     if (shapeSearch !== ''){
         results = results.filter(results => results.shape.trim().toLowerCase() === shapeSearch);
+        shapeSearch = '';
     }
     
     initTable(0, results);
